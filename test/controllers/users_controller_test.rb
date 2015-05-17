@@ -37,6 +37,11 @@ class UsersControllerTest < ActionController::TestCase
     assert_not duplicate_user.valid?
   end
 
+test "password should have a minimum lengh" do
+  @user.password=@user.password_confirmation="a"*3
+  assert_not @user.valid?
+end
+
 
 
 

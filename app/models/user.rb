@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   #添加email规则
   validates :email,presence:true,length: {maximum:200},format:{with:VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
-
   has_secure_password
+#添加password最小长度规则
+  validates :password,length: {minimum:6}
 end
