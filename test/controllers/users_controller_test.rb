@@ -42,7 +42,12 @@ test "password should have a minimum lengh" do
   assert_not @user.valid?
 end
 
-
+test "email address should be saved as downcase" do
+  uppercase_email="PENGISGOOD@GMAIL.COM"
+  @user.email=uppercase_email
+  @user.save
+  assert_equal uppercase_email.downcase,@user.reload.email
+end
 
 
   test "should get new" do
