@@ -9,9 +9,25 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   #whether the current user is logged in?
-  #I don't understand the session[:user_id] here,why the tutorial says it is a method?
-  #how can this work? 2015-5-19
   def is_logged_in?
+    puts session[:user_id].nil?
     !session[:user_id].nil?
   end
+
+  def log_in_as(user, options={})
+    password=options[:password] || 'password'
+    remember_me=options[:remember_me] || '1'
+    if integration_test?
+      post login_path, session: {email: user.email, password: password, remember_me: remember_me}
+    else
+      session[:user_id]=user.id
+    end
+  end
+
+  private
+  def integration_test?
+    defined?(post_via_redirect)
+  end
+
+
 end

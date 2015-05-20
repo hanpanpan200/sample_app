@@ -19,10 +19,14 @@ module SessionsHelper
   end
 
   def logged_in?
-    @current_user.nil?
+    !current_user.nil?
   end
 
   def log_out
+    #add by fionhan on 2015-5-20 to clear cookies in broswer,
+    # because if not, :user_id will not be nil and session[:user_id] will always not be nil,
+    #so the user will never log out,and the user_login_test.rb faild
+    forget current_user if !current_user.nil?
     session.delete(:user_id)
     @current_user=nil
   end
@@ -33,7 +37,7 @@ module SessionsHelper
     cookies.permanent[:remember_token]=user.remember_token
   end
 
-  # Forgets a persistent session.
+  # Forgets a persistent user information in cookies
   def forget(user)
     user.forget
     cookies.delete(:user_id)
