@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
             uniqueness: {case_sensitive: false}
   has_secure_password
 #添加password最小长度规则
-  validates :password,length: {minimum:6}
+  validates :password,length: {minimum:6},:allow_blank => true
 
   #return the hash digest of the given string
   def User.digest(string)
